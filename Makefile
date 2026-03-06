@@ -1,4 +1,4 @@
-.PHONY: build run install clean dev release-local test fmt lint ci
+.PHONY: build run install clean dev release-local test test-tui fmt lint ci
 
 BINARY_NAME=agent-deck
 BUILD_DIR=./build
@@ -50,6 +50,10 @@ dev:
 # Run tests (with race detector)
 test:
 	go test -race -v ./...
+
+# Run pexpect-based TUI tests (requires Python 3 + pexpect)
+test-tui: build
+	@cd tests/tui && pip install -q -r requirements.txt && pytest -v .
 
 # Format code
 fmt:
